@@ -67,23 +67,23 @@ const mySlides = [
     {
         pic: './assets/img/01.webp',
         ind: 0
-        },
+    },
     {
         pic: './assets/img/02.webp',
         ind: 1
-        },
+    },
     {
         pic: './assets/img/03.webp',
         ind: 2
-        },
+    },
     {
         pic: './assets/img/04.webp',
         ind: 3
-        },
+    },
     {
         pic: './assets/img/05.webp',
-        ind:4
-        }
+        ind: 4
+    }
 
 ]
 
@@ -121,7 +121,7 @@ Non eravamo ancora a conoscenza di molti strumenti utili, come ad esempio le fun
 
 mySlides.forEach(slide => {
 
-    const slideMarkup = `<img class="${activeSlide === slide.ind ? 'active' : '' }" src="${slide.pic}" alt="">`
+    const slideMarkup = `<img class="${activeSlide === slide.ind ? 'active' : ''}" src="${slide.pic}" alt="">`
 
     sliderImagesEl.insertAdjacentHTML('beforeend', slideMarkup)
 
@@ -130,7 +130,7 @@ mySlides.forEach(slide => {
 });
 
 
-  
+
 
 /* 
  
@@ -191,10 +191,10 @@ mySlides.forEach(slide => {
     const thumbPath = slide.ind;
     const thumbMarkup = `<img class="thumb ${activeSlide === thumbPath ? 'active' : ''}" src="${slide.pic}" alt="">`
     //console.log(thumbMarkup);
-  
+
     thumbsElement.insertAdjacentHTML('beforeend', thumbMarkup)
-    
-  });
+
+});
 
 
 
@@ -245,9 +245,68 @@ nextEl.addEventListener('click', function () {
 
 })
 
-// intercept click on the prev icon
+/*
+  Bonus 1:
+  Sperimentiamo attraverso l'uso delle timing functions anche una funzionalità di scorrimento al nostro carosello:
+  al click di un bottone o già dall'inizio possiamo far partire, 
+  ad intervalli di tempo a piacere, lo scorrimento delle immagini disponibili nel carosello stesso.
+  Bonus 2:
+  E se volessi un bottone per invertire la "direzione" del carosello?
+*/
 
 
+
+prevEl.addEventListener('click', autoScrollPrev);
+
+
+function autoScrollPrev() {
+    setInterval(prevPic, 2000);
+}
+
+function prevPic() {
+    console.log('cliccato su prev');
+    // select the current slide
+    const currentSlide = slidesImages[activeSlide];
+    // remove the active class from the current slide
+    currentSlide.classList.remove('active');
+    // select the active thumb
+    const currentThumb = document.querySelector('.thumbnails > img.active');
+    //console.log(currentThumb);
+    // remove the active class from the active thumb
+    currentThumb.classList.remove('active');
+
+
+    // activeSlide = 4
+
+    if (activeSlide === 0) {
+        activeSlide = slidesImages.length - 1
+        // activeSlide = 5
+    } else {
+        // decrement the activeSlide of 1
+        activeSlide--
+    }
+
+
+    // select the next slide
+    const prevSlide = slidesImages[activeSlide];
+    //console.log(prevSlide);
+    // add the active class to the next slide
+    prevSlide.classList.add('active');
+
+
+    //TODO
+
+    // select the next thumb
+    const nextThumb = document.querySelectorAll('.thumb')[activeSlide];
+    //console.log(nextThumb);
+    // add to the next thumb the active class
+    nextThumb.classList.add('active');
+
+}
+
+
+
+/*
 // activeSlide = 0
 prevEl.addEventListener('click', function () {
     console.log('cliccato su prev');
@@ -277,15 +336,6 @@ prevEl.addEventListener('click', function () {
     // add the active class to the next slide
     nextSlide.classList.add('active')
 })
-
-/*
-  Consegna:
-  
-  Bonus 1:
-  Sperimentiamo attraverso l'uso delle timing functions anche una funzionalità di scorrimento al nostro carosello:
-  al click di un bottone o già dall'inizio possiamo far partire, 
-  ad intervalli di tempo a piacere, lo scorrimento delle immagini disponibili nel carosello stesso.
-  Bonus 2:
-  E se volessi un bottone per invertire la "direzione" del carosello?
 */
+
 
