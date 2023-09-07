@@ -66,28 +66,23 @@ const slides = [
 const mySlides = [
     {
         pic: './assets/img/01.webp',
-        descr: "spidy",
-        index: 0
+        ind: 0
         },
     {
         pic: './assets/img/02.webp',
-        descr: "topi",
-        index: 1
+        ind: 1
         },
     {
         pic: './assets/img/03.webp',
-        descr: "boh",
-        index: 2
+        ind: 2
         },
     {
         pic: './assets/img/04.webp',
-        descr: "gattone",
-        index: 3
+        ind: 3
         },
     {
         pic: './assets/img/05.webp',
-        descr: "avengers",
-        index:4
+        ind:4
         }
 
 ]
@@ -123,6 +118,19 @@ Non eravamo ancora a conoscenza di molti strumenti utili, come ad esempio le fun
 */
 
 
+
+mySlides.forEach(slide => {
+
+    const slideMarkup = `<img class="${activeSlide === slide.ind ? 'active' : '' }" src="${slide.pic}" alt="">`
+
+    sliderImagesEl.insertAdjacentHTML('beforeend', slideMarkup)
+
+    console.log(slide.pic);
+
+});
+
+
+  
 
 /* 
  
@@ -178,18 +186,15 @@ const thumbsElement = document.querySelector('.thumbnails')
 
 // }
 
-for (const index in slides) {
+mySlides.forEach(slide => {
 
-    console.log("index", index);
-    const thumbPath = slides[index].pic;
-    console.log("thumbpath", thumbPath);
-
-    const thumbMarkup = `<img class="${activeSlide == index ? 'active' : ''}" src="${thumbPath}" alt="">`;
-    console.log("thumb markup", thumbMarkup);
-
-    thumbImagesEl.insertAdjacentHTML('beforeend', thumbMarkup);
-};
-
+    const thumbPath = slide.ind;
+    const thumbMarkup = `<img class="thumb ${activeSlide === thumbPath ? 'active' : ''}" src="${slide.pic}" alt="">`
+    //console.log(thumbMarkup);
+  
+    thumbsElement.insertAdjacentHTML('beforeend', thumbMarkup)
+    
+  });
 
 
 
@@ -275,12 +280,6 @@ prevEl.addEventListener('click', function () {
 
 /*
   Consegna:
-  Riprendiamo il live coding visto in classe un pó di tempo fá sul carosello di immagini 
-  e rifacciamolo usando gli oggetti.
-
-  
-  
- 
   
   Bonus 1:
   Sperimentiamo attraverso l'uso delle timing functions anche una funzionalità di scorrimento al nostro carosello:
